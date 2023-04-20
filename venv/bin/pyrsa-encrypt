@@ -1,4 +1,4 @@
-#!/Users/staszatusevckij/Desktop/Dev/QRkot_spreadsheets-main/venv/bin/python3
+#!/Users/staszatusevckij/Desktop/Dev/QRkot_spreadsheets/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
