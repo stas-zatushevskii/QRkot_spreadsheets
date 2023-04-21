@@ -7,8 +7,8 @@ class Settings(BaseSettings):
     app_title: str = 'Бронирование переговорок'
     database_url: str = 'sqlite+aiosqlite:///./fastapi.db'
     secret: str = 'SECRET'
-    first_superuser_email: Optional[EmailStr] = 'STAs20160@yandex.ru'
-    first_superuser_password: Optional[str] = '123573453489idas'
+    first_superuser_email: Optional[EmailStr] = 's@s.ru'
+    first_superuser_password: Optional[str] = '123'
     type: Optional[str] = None
     project_id: Optional[str] = None
     private_key_id: Optional[str] = None
