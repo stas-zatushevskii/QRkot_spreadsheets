@@ -28,3 +28,7 @@ async def create_user(
                     )
     except UserAlreadyExists:
         pass
+
+
+async def create_first_superuser():
+    pass
