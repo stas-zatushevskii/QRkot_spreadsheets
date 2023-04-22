@@ -3,18 +3,26 @@ from typing import Optional
 
 from pydantic import BaseModel, Extra, Field, PositiveInt
 
+
+MAX_VALUE = 100
+MIN_VALUE = 1
+MINUTES = 10
+HOURS = 1
+TEST_DATA = 500
+
+
 CREATED_TIME = (
-    datetime.now() + timedelta(minutes=10)
+    datetime.now() + timedelta(minutes=MINUTES)
 ).isoformat(timespec='minutes')
 
 CLOSED_TIME = (
-    datetime.now() + timedelta(hours=1)
+    datetime.now() + timedelta(hours=HOURS)
 ).isoformat(timespec='minutes')
 
 
 class ProjectsCreate(BaseModel):
-    name: str = Field(..., min_length=1, max_length=100)
-    description: str = Field(..., min_length=1)
+    name: str = Field(..., min_length=MIN_VALUE, max_length=MAX_VALUE)
+    description: str = Field(..., min_length=MIN_VALUE)
     full_amount: PositiveInt
 
     class Config:
@@ -24,15 +32,15 @@ class ProjectsCreate(BaseModel):
             'example': {
                 'name': 'Мощный котик',
                 'description': 'Создаем фитнесс-центр',
-                'full_amount': 500
+                'full_amount': TEST_DATA
             }
         }
 
 
 class ProjectsUpdate(BaseModel):
 
-    name: Optional[str] = Field(min_length=1, max_length=100)
-    description: Optional[str] = Field(min_length=1)
+    name: Optional[str] = Field(min_length=MIN_VALUE, max_length=MAX_VALUE)
+    description: Optional[str] = Field(min_length=MIN_VALUE)
     full_amount: Optional[PositiveInt]
 
     class Config:
@@ -42,7 +50,7 @@ class ProjectsUpdate(BaseModel):
             'example': {
                 'name': 'Мощный котик',
                 'description': 'Создаем фитнесс-центр',
-                'full_amount': 500
+                'full_amount': TEST_DATA
             }
         }
 

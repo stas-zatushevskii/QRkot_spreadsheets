@@ -5,12 +5,18 @@ from typing import Optional
 from fastapi import HTTPException
 from pydantic import BaseModel, Field, validator
 
+
+MIN_VALUE = 0
+MINUTES = 10
+HOURS = 1
+
+
 CREATED_TIME = (
-    datetime.now() + timedelta(minutes=10)
+    datetime.now() + timedelta(minutes=MINUTES)
 ).isoformat(timespec='minutes')
 
 CLOSED_TIME = (
-    datetime.now() + timedelta(hours=1)
+    datetime.now() + timedelta(hours=HOURS)
 ).isoformat(timespec='minutes')
 
 
@@ -28,7 +34,7 @@ class DonationsCreate(DonationsBase):
 
     @validator('full_amount')
     def int_validator(cls, value: int):
-        if value <= 0:
+        if value <= MIN_VALUE:
             raise HTTPException(
                 status_code=HTTPStatus.UNPROCESSABLE_ENTITY,
             )

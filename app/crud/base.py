@@ -81,8 +81,8 @@ class CRUDBase:
         return db_obj
 
     async def not_fully_invested(self, session: AsyncSession):
-        charity_projects = await session.scalars(
+        return await session.scalars(
             select(self.model).where(not_(self.model.fully_invested))
                               .order_by(self.model.create_date)
         )
-        return charity_projects
+

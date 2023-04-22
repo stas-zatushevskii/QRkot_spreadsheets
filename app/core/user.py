@@ -14,6 +14,10 @@ from app.models.user import User
 from app.schemas.user import UserCreate
 
 
+MIN_VALUE = 3
+LIFE_TIME = 3600
+
+
 async def get_user_db(session: AsyncSession = Depends(get_async_session)):
     yield SQLAlchemyUserDatabase(session, User)
 
@@ -21,7 +25,7 @@ bearer_transport = BearerTransport(tokenUrl='auth/jwt/login')
 
 
 def get_jwt_strategy() -> JWTStrategy:
-    return JWTStrategy(secret=settings.secret, lifetime_seconds=3600)
+    return JWTStrategy(secret=settings.secret, lifetime_seconds=LIFE_TIME)
 
 
 auth_backend = AuthenticationBackend(
@@ -38,7 +42,7 @@ class UserManager(IntegerIDMixin, BaseUserManager[User, int]):
         password: str,
         user: Union[UserCreate, User],
     ) -> None:
-        if len(password) < 3:
+        if len(password) < MIN_VALUE:
             raise InvalidPasswordException(
                 reason='Password should be at least 3 characters'
             )

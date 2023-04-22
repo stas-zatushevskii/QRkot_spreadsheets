@@ -8,6 +8,9 @@ from app.models import CharityProject
 from app.schemas.projects import ProjectsUpdate
 
 
+MIN_VALUE = 0
+
+
 async def check_project_exists(
         project_id: int,
         session: AsyncSession,
@@ -57,7 +60,7 @@ async def check_project_invested_amount(
         session: AsyncSession,
 ) -> CharityProject:
     project = await projects_crud.get(project_id, session)
-    if project.invested_amount > 0:
+    if project.invested_amount > MIN_VALUE:
         raise HTTPException(
             status_code=HTTPStatus.BAD_REQUEST,
             detail='В проект были внесены средства, не подлежит удалению!'

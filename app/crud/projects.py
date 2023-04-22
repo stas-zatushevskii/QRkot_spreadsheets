@@ -5,6 +5,9 @@ from app.crud.base import CRUDBase
 from app.models import CharityProject
 
 
+TRUE_VALUE = 1
+
+
 class CRUDProjects(CRUDBase):
     async def get_projects_by_name(
         self,
@@ -23,7 +26,7 @@ class CRUDProjects(CRUDBase):
     ) -> list[dict[str, int]]:
         projects = await session.execute(
             select(CharityProject).where(
-                CharityProject.fully_invested == 1
+                CharityProject.fully_invested == TRUE_VALUE
             )
         )
         return projects.scalars().all()

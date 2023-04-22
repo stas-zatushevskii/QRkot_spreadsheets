@@ -5,6 +5,9 @@ from app.core.config import settings
 
 
 FORMAT = "%Y/%m/%d %H:%M:%S"
+ROW = 100
+COLUMN = 11
+SHEETID = 0
 
 
 async def spreadsheets_create(wrapper_services: Aiogoogle) -> str:
@@ -14,16 +17,15 @@ async def spreadsheets_create(wrapper_services: Aiogoogle) -> str:
         'properties': {'title': f'Отчет от {now_date_time}',
                        'locale': 'ru_RU'},
         'sheets': [{'properties': {'sheetType': 'GRID',
-                                   'sheetId': 0,
+                                   'sheetId': SHEETID,
                                    'title': 'Лист1',
-                                   'gridProperties': {'rowCount': 100,
-                                                      'columnCount': 11}}}]
+                                   'gridProperties': {'rowCount': ROW,
+                                                      'columnCount': COLUMN}}}]
     }
     response = await wrapper_services.as_service_account(
         service.spreadsheets.create(json=spreadsheet_body)
     )
-    spreadsheetid = response['spreadsheetId']
-    return spreadsheetid
+    return response['spreadsheetId']
 
 
 async def set_user_permissions(
@@ -38,7 +40,7 @@ async def set_user_permissions(
         service.permissions.create(
             fileId=spreadsheetid,
             json=permissions_body,
-            fields="id"
+            fields='id'
         ))
 
 

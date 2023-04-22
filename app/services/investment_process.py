@@ -8,6 +8,9 @@ from app.crud.projects import projects_crud
 from app.models import CharityProject, Donation
 
 
+MIN_VALUE = 0
+
+
 def fully_invest(obj: Union[CharityProject, Donation]) -> None:
     obj.fully_invested = True
     obj.invested_amount = obj.full_amount
@@ -33,7 +36,7 @@ async def investment_process_project(
                 fully_invest(donation)
                 project.invested_amount += donation.invested_amount
                 summ_need = summ_need - donation.full_amount
-                if summ_need == 0:
+                if summ_need == MIN_VALUE:
                     fully_invest(project)
 
     await session.commit()
@@ -58,7 +61,7 @@ async def investment_process_donation(
                 fully_invest(donation)
                 project.invested_amount += donation.invested_amount
                 summ_need = summ_need - donation.full_amount
-                if summ_need == 0:
+                if summ_need == MIN_VALUE:
                     fully_invest(project)
 
     await session.commit()

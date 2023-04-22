@@ -75,7 +75,6 @@ async def delete_reservation(
     project = await check_project_invested_amount(
         project_id, session
     )
-    project = await projects_crud.remove(
+    return await projects_crud.remove(
         project, session
     )
-    return project
