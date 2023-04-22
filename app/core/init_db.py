@@ -29,5 +29,3 @@ async def create_user(
                     )
     except UserAlreadyExists:
         pass
-
-
